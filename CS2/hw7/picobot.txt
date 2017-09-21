@@ -1,0 +1,37 @@
+# state 0 (facing N) with nothing E: go E, face E
+0 *x** -> E 1
+# state 0 (facing N) with something E, nothing N, go N, face N
+0 xE** -> N 0
+# state 0 (facing N) with something N and E, nothing W, go W, face W
+0 NEx* -> W 2
+# state 0 (facing N) with something N, E, and W, nothing S, go S, face S
+0 NEWx -> S 3
+
+
+# state 1 (facing E) with nothing S: go S, face S
+1 ***x -> S 3
+# state 1 (facing E) with something S, nothing E, go E, face E
+1 *x*S -> E 1
+# state 1 (facing E) with something S and E, nothing N, go N, face N
+1 xE*S -> N 0
+# state 1 (facing E) with something N, S, and E, nothing W, go W, face W
+1 NExS -> W 2
+
+
+# state 2 (facing W) with nothing N: go N, face N
+2 x*** -> N 0
+# state 2 (facing W) with something N, nothing W, go W, face W
+2 N*x* -> W 2
+# state 2 (facing W) with something W and N, nothing S, go S, face S
+2 N*Wx -> S 3
+# state 2 (facing W) with something S, W, and N, nothing E, go E, face E
+2 NxWS -> E 1
+
+# state 3 (facing S) with nothing W: go W, face W
+3 **x* -> W 2
+# state 3 (facing S) with something W, nothing S, go S, face S
+3 **Wx -> S 3
+# state 3 (facing S) with something S and W, nothing E, go E, face E
+3 *xWS -> E 1
+# state 3 (facing S) with something E, S, and W, nothing N, go N, face N
+3 xEWS -> N 0

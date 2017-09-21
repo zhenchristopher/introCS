@@ -1,0 +1,169 @@
+1) 12235
+
+2) AAAABAAAA
+
+3) Definition 1: Given a set of symbols s1, …, sn, a frequency function freq 
+that assigns a positive frequency to each symbol, and a prefix code that 
+such that bits(s) is the number of bits used to represent each character s, 
+the weight of the code is defined to be the sum of the freq(s)*bits(s) terms 
+summed over all n symbols. 
+
+Huffman’s Theorem:  The Huffman compression algorithm finds a prefix code 
+with minimum total weight.
+
+Lemma 1:  Every prefix code has a corresponding binary tree in which each 
+leaf of the tree is labeled by a symbol and the depth of that leaf 
+corresponds to the number of bits used for that symbol in the given 
+prefix code:
+
+Proof:  Since each node in the tree has a unique traversal, each code will
+be unique. Also since the codes are all leaves, they satisfy the prefix
+condition because none of codes are a node in the path of another code.
+
+Definition 2:  For a binary tree T corresponding to a prefix code, we let 
+weight(T) denote the sum of the terms freq(s)*depth(s) where depth(s) is the 
+depth of leaf s (which, by Lemma 1, corresponds to the number of bits 
+used to encode s).
+
+Lemma 2:  There exists an optimal prefix code in which the two symbols of 
+lowest frequency s1 and s2 are siblings in the corresponding binary tree 
+for that code.
+
+Proof:  If s1 and s2 have the same depth, then the lemma is true. So now,
+assume that s1 and s2 do not have the same depth. Also WLOG assume that s1
+is deeper than s2. Now we consider a few of the possible cases where s1 and
+s2 have different depths. S1 could have another sibling (which has a higher
+frequency than s2). This is non-optimal because swapping the sibling with s2
+lowers the weight so this case is not possible by contradiction. The second
+case is that there is another node deeper than s1. But in this case, if we 
+swap s1 and that other node, we'll have a lower weight so this is also not
+an optimal tree. The last case is that s1 is an only child. In this case, if
+we remove s1's parent and move s1 up a level, we have a lower weight so this
+case is also impossible. Therefore, by contradiction, s1 and s2 must be 
+siblings.
+
+Lemma 3:  Given a tree T with leaves s1, s2, …, sn and a tree T’ with 
+leaves alpha, s3, …, sn where freq(alpha) = freq(s1) + freq(s2), 
+weight(T) = weight(T’) + freq(s1) + freq(s2).
+
+Proof:  If s1 and s2 are the two lowest frequencies, by Lemma 2, we know that
+they are siblings. Since we combine these two into alpha, alpha becomes a new
+leaf at the depth of depth(s1)-1 (or depth(s2)-1), so the weight of alpha is 
+now (depth(s1)-1)*(s1 + s2) = depth(s1)*(s1)+depth(s2)*s2-(s1+s2), which is
+what we wanted to prove.
+
+Proof of Huffman’s Theorem:  
+
+The proof is by induction on n, the number of symbols in the alphabet.
+
+Basis: The trivial case is that if we only have 2 symbols, assigning one a 0
+and the other a 1 will give the minimum weight.
+
+Induction hypothesis:  Assume that we the huffman algorithm returns the optimal
+weight solution for an alphabet with n symbols.
+
+Induction step: Let's say that we now have an alphabet of n+1 symbols. Our 
+Huffman solution in this case is T_huffman. Now let's say that there exists a
+more optimal solution T_better that is different than T_huffman. Now let's
+consider an alphabet of n symbols by combining two symbols into one. In this
+case, we already assumed that a T'_huffman solution for this situation is
+optimal, so it's weight is less than or equal to the corresponding T'_better
+solution. Since T_huffman-T'_huffman = T_better-T'_better = freq(s1) + fre1(s2)
+this tells us that the weight of T_huffman is less than or equal to T_better
+which is a contradiction, so T_huffman is the optimal solution.
+
+(Please use the notation T’_huffman for the Huffman tree for alphabet 
+alpha, s3, …, sn), T_huffman for the Huffman tree for the alphabet 
+s1, … sn, T_better for the putative tree/code that is assumed to be better 
+than T_huffman and T’_better for the other tree that you’ll need to introduce).
+
+4) Proof of NP-hardness of:  Wellmart Decision Problem
+
+The reduction will be from:  Dominating Set
+
+Description of reduction:  Given an input instance of 
+Problem WDP we construct a corresponding output instance of 
+Problem WDP as follows: Given a graph that we are using for the WDP, we set
+all costs and distances to 1 then we need to let d = 1 and set k = # vertices
+in the minimum dominating set. We find k by iterating through values starting
+with k = 0. When we reach the first true statement, then that is the minimum
+dominating set.
+
+This reduction takes polynomial time:  It should take O(n) time to iterate
+until we get a true.
+
+Proof of correctness:
+
+1.  If the answer to the input instance is “yes” then the answer to the 
+constructed output instance is “yes”. If the answer to the input is yes, then
+we just say that the minimum dominating set is k
+
+
+2.  If the answer to the input instance is “no” then the answer to the 
+constructed output instance is “no”. If the answer is no, then we try k = k+1
+
+5) Proof of NP-hardness of:  2-SAT
+
+The reduction will be from:  Independent Set
+
+Description of reduction:  Given an input instance of 
+Problem 2-SAT we construct a corresponding output instance of 
+Problem 2-SAT as follows: We can build a graph from the 2-SAT points by letting
+each statement that must be true be an edge. In this way, each element in the
+the and statements are connected and each element is connected to its inverse
+(because a or a' must be true). Then we can iterate from k = 0 and see if our
+2-SAT function tells us if it's possible to be true, then if that's the case we
+know that an independent set can be made from k points, so k is the minimum
+independent set.
+
+This reduction takes polynomial time:  It takes O(n) time to check from k = 0
+to k = n
+
+Proof of correctness:
+
+1.  If the answer to the input instance is “yes” then the answer to the 
+constructed output instance is “yes”. if yes then k is min ind set
+
+
+2.  If the answer to the input instance is “no” then the answer to the 
+constructed output instance is “no”. if no, check k = k+1
+
+Bonus: 
+
+# state 0 (facing N) with nothing E: go E, face E
+0 *x** -> E 1
+# state 0 (facing N) with something E, nothing N, go N, face N
+0 xE** -> N 0
+# state 0 (facing N) with something N and E, nothing W, go W, face W
+0 NEx* -> W 2
+# state 0 (facing N) with something N, E, and W, nothing S, go S, face S
+0 NEWx -> S 3
+
+
+# state 1 (facing E) with nothing S: go S, face S
+1 ***x -> S 3
+# state 1 (facing E) with something S, nothing E, go E, face E
+1 *x*S -> E 1
+# state 1 (facing E) with something S and E, nothing N, go N, face N
+1 xE*S -> N 0
+# state 1 (facing E) with something N, S, and E, nothing W, go W, face W
+1 NExS -> W 2
+
+
+# state 2 (facing W) with nothing N: go N, face N
+2 x*** -> N 0
+# state 2 (facing W) with something N, nothing W, go W, face W
+2 N*x* -> W 2
+# state 2 (facing W) with something W and N, nothing S, go S, face S
+2 N*Wx -> S 3
+# state 2 (facing W) with something S, W, and N, nothing E, go E, face E
+2 NxWS -> E 1
+
+# state 3 (facing S) with nothing W: go W, face W
+3 **x* -> W 2
+# state 3 (facing S) with something W, nothing S, go S, face S
+3 **Wx -> S 3
+# state 3 (facing S) with something S and W, nothing E, go E, face E
+3 *xWS -> E 1
+# state 3 (facing S) with something E, S, and W, nothing N, go N, face N
+3 xEWS -> N 0

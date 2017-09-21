@@ -1,0 +1,6 @@
+HW 8 Written
+Christopher Zhen
+
+1) In the case of a graph where each vertex has at most degree 2, we can see that the only two possible cases are if all the vertices are in a straight line, or a connected cycle. In these two cases, the minimum vertex cover is ceiling(n) where n is the number of vertices. So for all k >= n the vertex cover problem is true.
+
+2) Start with the gadgets from class where we have no restrictions. Now if there is a variable vertex with a degree higher than 3, then we need duplicate that variable gadget and split the edges between the old and the new gadget. This leaves us with a gadget that still satisfied 3-SAT, but only has at most degree 3 at any vertex, proving that vertex cover is np-hard in this case.

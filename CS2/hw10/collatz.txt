@@ -1,0 +1,21 @@
+# Christopher Zhen
+# March 14, 2017
+# collatz.txt
+
+# This file is the code to prove/disprove the Collatz conjecture given a
+# halt-checking function
+
+def Collatz():
+    return HaltChecker(P,0)
+
+def P(start):
+    num = start
+    while HaltChecker(F,num):
+        num += 1
+
+def F(number):
+    while number != 1:
+        if number/2 == int(number/2):
+            number = number/2
+        else:
+            number = 3*number + 1

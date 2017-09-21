@@ -1,0 +1,39 @@
+Christopher Zhen
+Feburary 7, 2017
+Inter-review
+
+1) Dynamic programming is faster than recursion with memoization because it's
+a bottom-up programming method as compared to a top-down with recursion. This
+means that in dynamic programming we solve the smaller subproblems first and
+then gradually move onto bigger problems whereas in recursion we solve the
+larger problem assuming we have already solved the smaller subproblems. This
+way, memoization typically computes and stores lots of unnecessary and even 
+repetitive cases while dynamic programming only computes what is necessary. 
+Also, in dynamic programming, the order of the calculations is determined 
+beforehand and is typically optimized by the programmer whereas recursion doesn't care about the order.
+
+2) In terms of worst case performance, using a binary heap gives O(n) time for 
+find, O(log n) time for insert, and O(n) time for delete (since we need to find
+the element). This compares favorably to the array implementation of sets, but 
+unfavorably to the linked list (O(1) for insert) and AVL (O(log n) for all)
+implementations. Since non-balanced BSTs have a worst case performance equiv of
+arrays, this also compares favorably to those. Overall, binary heaps are an
+okay way to implement sets, but we'd be better off using linked lists or AVL
+trees
+
+3) AVL trees are actually fine for implementing priority queues compared to
+binary heaps. Since insert, find, and delete are all O(log n) time 
+(proportional to height of tree), adding and retrieving elements from the
+priority queue should both be O(log n) time which is also true in the binary
+heap implementation (since we need to re-balance the heap after removing the
+first item). However, AVL trees have an advantage over binary heaps in that
+they can find an arbitrary element faster than in a binary tree where it takes
+O(n) time. This comes with the added cost of a more complicated algorithm to 
+implement and if we don't need this extra feature, a binary heap is easier to
+implement and is just as effective.
+
+4) This still takes an amortized time of O(1) because just like doubling the 
+array size each time, we only have to perform the extending operation an 
+exponentially decreasing number of times, so most of the time we are just
+performing a constant time insertion. For large enough n, this averages out to
+a time of O(n) to add all elements, so an amortized time of O(1) for each one. 
